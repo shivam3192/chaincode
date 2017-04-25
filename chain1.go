@@ -84,15 +84,15 @@ var account string
         }
         record.StudentRollNo   =args[0];
         record.StudentName     =args[1];
-        
-		ii1,err :=strconv.Atoi("args[2]");
+        var ii1,ii2,ii3,ii4 int ;
+		ii1,err =strconv.Atoi("args[2]");
 	    record.StudentMarksSem1= ii1;
 
-		ii2,err :=strconv.Atoi("args[3]");
+		ii2,err =strconv.Atoi("args[3]");
 		record.StudentMarksSem2=ii2;
-		ii3,err :=strconv.Atoi("args[4]");
+		ii3,err =strconv.Atoi("args[4]");
 		record.StudentMarksSem3=ii3;
-		ii4,err :=strconv.Atoi("args[5]");
+		ii4,err =strconv.Atoi("args[5]");
         record.StudentMarksSem4=ii4;
 		
 		newrecordByte, err := json.Marshal(record);
