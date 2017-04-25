@@ -13,10 +13,10 @@ type StudentInfo struct {
 
         StudentRollNo string   `json:"studentrollno"`
         StudentName string `json:"StudentName"`
-        StudentMarksSem1 string   `json:"studentmarkssem1"`
-		StudentMarksSem2 string   `json:"studentmarkssem2"`
-		StudentMarksSem3 string   `json:"studentmarkssem3"`
-		StudentMarksSem4 string   `json:"studentmarkssem4"`
+        StudentMarksSem1 int   `json:"studentmarkssem1"`
+		StudentMarksSem2 int   `json:"studentmarkssem2"`
+		StudentMarksSem3 int   `json:"studentmarkssem3"`
+		StudentMarksSem4 int   `json:"studentmarkssem4"`
 		BadgeInfo 
 }
 	type BadgeInfo struct {
@@ -84,17 +84,16 @@ var account string
         }
         record.StudentRollNo   =args[0];
         record.StudentName     =args[1];
-        var ii1,ii2,ii3,ii4 int ;
-		ii1,err =strconv.Atoi("args[2]");
-	    record.StudentMarksSem1= ii1;
-
-		ii2,err =strconv.Atoi("args[3]");
-		record.StudentMarksSem2=ii2;
-		ii3,err =strconv.Atoi("args[4]");
-		record.StudentMarksSem3=ii3;
-		ii4,err =strconv.Atoi("args[5]");
-        record.StudentMarksSem4=ii4;
-		
+      
+	  //var new1,new2,new3,new4 int ;
+	     new1,err :=strconv.Atoi("args[2]");
+		 record.StudentMarksSem1=new1;
+		 new2,err:=strconv.Atoi("args[3]");
+		record.StudentMarksSem2=new2;
+		new3,err:=strconv.Atoi("args[4]");
+		record.StudentMarksSem3=new3;
+		new4,err:=strconv.Atoi("args[5]");
+        record.StudentMarksSem4=new4;
 		newrecordByte, err := json.Marshal(record);
         if err!=nil {
 
