@@ -1,108 +1,173 @@
-
-
 package main
 
 import (
-	"errors"
-	"fmt"
-
-	"github.com/hyperledger/fabric/core/chaincode/shim"
+        "errors"
+        "fmt"
+       // "strconv"
+        "encoding/json"
+        "github.com/hyperledger/fabric/core/chaincode/shim"
 )
 
-// SimpleChaincode example simple Chaincode implementation
-type SimpleChaincode struct {
-		StudentRollNo     string  `json:"Studentrollno"`
-        StudentName        string   `json:"Studentname"`
-        
+// CrowdFundChaincode implementation
+type CrowdFundChaincode struct {
+}
+type Info struct {
 
+        StudentRollNo string   `json:"studentrollno"`
+        StudentName string `json:"StudentName"`
+        StudentMarksSem1 string   `json:"studentmarkssem1"`
+		StudentMarksSem2 string   `json:"studentmarkssem2"`
+		StudentMarksSem3 string   `json:"studentmarkssem3"`
+		StudentMarksSem4 string   `json:"studentmarkssem4"`
+		BadgeInfo 
+}
+	type BadgeInfo struct {
+	
+        BadgeName       []string   `json:"Badgeame"`
+        BadgeUrl        []string `json:"Badgeurl"`
+        BadgeIssuedBy   []string   `json:"Badgeissuedby"`
+        BadgeIssuedTo   []string `json:"Badgeissuedto"`
+        //time 
+}
+//
+// Init creates the state variable with name "account" and stores the value
+// from the incoming request into this variable. We now have a key/value pair
+// for account --> accountValue.
+//
+func (t *CrowdFundChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+        // State variable "account"
+        // The value stored inside the state variable "account"
+        
+        // Any error to be reported back to the client
+        var err error
+
+        if len(args) != 2 {
+                return nil, errors.New("Incorrect number of arguments. Expecting 2.")
+        }
+
+     //   information := Info{}
+       // informationbyte, err := json.Marshal(information)
+     if err!=nil {
+                        return nil, err
+                }
+         record := Info{}
+       // errrecordmarshal := json.Unmarshal(recordByte,&record);
+        record.StudentRollNo="12"
+        record.StudentName = "assa"
+        record.StudentMarksSem1 = 99;
+		record.StudentMarksSem1 = 98;
+		record.StudentMarksSem1 = 97;
+		record.StudentMarksSem1 = 96;
+        
+	    newrecordByte, err := json.Marshal(record);
+        if err!=nil {
+
+            return nil, err
+        }
+                err=stub.PutState("default",newrecordByte);
+         if err!=nil {
+                        return nil, err
+                }
+
+        return nil, nil
+}
+
+//
+// Invoke retrieves the state variable "account" and increases it by the ammount
+// specified in the incoming request. Then it stores the new value back, thus
+// updating the ledger.
+//
+func (t *CrowdFundChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+    
+var account string
+
+        var err error
+
+        if len(args) != 5 {
+                return nil, errors.New("Incorrect number of arguments. Expecting 2.")
+        }
+          account = args[0]
+
+         recordByte, err := stub.GetState(account);
+        fmt.Println(recordByte);
+        if err != nil {
+
+            return nil, err
+        }
+        record := Info{}
+        if recordByte != nil {
+        errrecordmarshal := json.Unmarshal(recordByte,&record);
+        if errrecordmarshal != nil {
+            return nil, errrecordmarshal
+        }    
+               
+        }
+       
+            
+        record.StudentRollNo = append(record.StudentRollNo,args[1]);
+        record.StudentName = append(record.StudentName,args[2]);
+        record.StudentMarks=append(record.StudentMarks,args[3]);
+        record.Success=append(record.Success,args[4]);
+        newrecordByte, err := json.Marshal(record);
+        if err!=nil {
+
+            return nil, err
+        }
+        err =stub.PutState(account,newrecordByte);
+        if err != nil {
+
+            return nil, err;
+        } 
+        return nil, nil
+}
+
+
+//
+// Query retrieves the state variable "account" and returns its current value
+// in the response.
+//
+func (t *CrowdFundChaincode) Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+  if function != "query" {
+                return nil, errors.New("Invalid query function name. Expecting \"query\".")
+        }
+
+        // State variable "account"
+       // var account string
+        // Any error to be reported back to the client
+        var err error
+
+         if len(args) != 1 {
+                return nil, errors.New("Incorrect number of arguments. Expecting name of the state variable to query.")
+        }
+
+        // Read in the name of the state variable to be returned
+     var   account = args[0]
+     //   information:=Info{}
+        // Get the current value of the state variable
+        accountValueBytes ,err := stub.GetState(account)
+        if err != nil {
+              //  jsonResp := "{\"Error\":\"Failed to get state for " + account + "\"}"
+                 return nil, err
+        }
+      /*  if accountValueBytes == nil {
+                jsonResp := "{\"Error\":\"Nil amount for " + account + "\"}"
+                return nil, errors.New(jsonResp)
+        }
+      errUnmarshal:=json.Unmarshal(accountValueBytes,&information)
+       if errUnmarshal!=nil {
+                return nil,errUnmarshal
+        }
+        jsonResp := "{\"Name\":\"" + account + "\",\"StudentRollNo\":\"" + information.StudentRollNo + "\",\"count\":\"" + information.count + "\"}"
+        fmt.Printf("Query Response:%s\n", jsonResp)
+        */
+        return accountValueBytes, nil
 }
 
 func main() {
-	err := shim.Start(new(SimpleChaincode))
-	if err != nil {
-		fmt.Printf("Error starting Simple chaincode: %s", err)
-	}
+        err := shim.Start(new(CrowdFundChaincode))
+
+        if err != nil {
+                fmt.Printf("Error starting CrowdFundChaincode: %s", err)
+        }
 }
 
-// Init resets all the things
-func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-	
-	var account string 
-	if len(args) != 1 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 1")
-	}
-
-    account = args[0]
-	err := stub.PutState(account, []byte(args[0]))
-	if err != nil {
-		return nil, err
-	}
-
-	return nil, nil
-}
-
-// Invoke isur entry point to invoke a chaincode function
-func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-	fmt.Println("invoke is running " + function)
-
-	// Handle different functions
-	if function == "init" {
-		return t.Init(stub, "init", args)
-	} else if function == "write" {
-		return t.write(stub, args)
-	}
-	fmt.Println("invoke did not find func: " + function)
-
-	return nil, errors.New("Received unknown function invocation: " + function)
-}
-
-// Query is our entry point for queries
-func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-	fmt.Println("query is running " + function)
-
-	// Handle different functions
-	if function == "read" { //read a variable
-		return t.read(stub, args)
-	}
-	fmt.Println("query did not find func: " + function)
-
-	return nil, errors.New("Received unknown function query: " + function)
-}
-
-// write - invoke function to write key/value pair
-func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
-	var key, value string
-	var err error
-	fmt.Println("running write()")
-
-	if len(args) != 2 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the key and value to set")
-	}
-
-	key = args[0] //rename for funsies
-	value = args[1]
-	err = stub.PutState(key, []byte(value)) //write the variable into the chaincode state
-	if err != nil {
-		return nil, err
-	}
-	return nil, nil
-}
-
-// read - query function to read key/value pair
-func (t *SimpleChaincode) read(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
-	var key, jsonResp string
-	var err error
-
-	if len(args) != 1 {
-		return nil, errors.New("Incorrect number of arguments. Expecting name of the key to query")
-	}
-
-	key = args[0]
-	valAsbytes, err := stub.GetState(key)
-	if err != nil {
-		jsonResp = "{\"Error\":\"Failed to get state for " + key + "\"}"
-		return nil, errors.New(jsonResp)
-	}
-
-	return valAsbytes, nil
-}
