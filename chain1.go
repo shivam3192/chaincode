@@ -135,13 +135,13 @@ recordByte, err := stub.GetState(account);
 			i4, err := strconv.Atoi("record.StudentMarksSem4"); 
 
 avg = (i1+i2+i3+i4)/4;
-		if (avg >=85) && (avg <100) {
+		if((avg >=85) && (avg <100)) {
 			    record.BadgeInfo.BadgeIssuedTo = record.StudentName;
                 record.BadgeInfo.BadgeName = "MTech(IT)_IIIT_Bangalore_with_Division1";
                 record.BadgeInfo.BadgeUrl = "";
                 record.BadgeInfo.BadgeIssuedBy = "Dean";
                 //record.badgeIssuedTo = "account";
-            } else if (avg >= 60) && (avg < 85) {
+            } else if((avg >= 60) && (avg < 85)) {
                 record.BadgeInfo.BadgeIssuedTo = record.StudentName;
                 record.BadgeInfo.BadgeName = "MTech(IT)_IIIT_Bangalore_with_Division2";
                 record.BadgeInfo.BadgeUrl = "";
