@@ -13,10 +13,10 @@ type StudentInfo struct {
 
         StudentRollNo string   `json:"studentrollno"`
         StudentName string `json:"StudentName"`
-        StudentMarksSem1 int   `json:"studentmarkssem1"`
-		StudentMarksSem2 int   `json:"studentmarkssem2"`
-		StudentMarksSem3 int   `json:"studentmarkssem3"`
-		StudentMarksSem4 int   `json:"studentmarkssem4"`
+        StudentMarksSem1 string   `json:"studentmarkssem1"`
+		StudentMarksSem2 string   `json:"studentmarkssem2"`
+		StudentMarksSem3 string   `json:"studentmarkssem3"`
+		StudentMarksSem4 string   `json:"studentmarkssem4"`
 		BadgeInfo 
 }
 	type BadgeInfo struct {
