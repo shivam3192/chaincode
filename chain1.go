@@ -11,6 +11,10 @@ import (
 
 // SimpleChaincode example simple Chaincode implementation
 type SimpleChaincode struct {
+		StudentRollNo     string  `json:"Studentrollno"`
+        StudentName        string   `json:"Studentname"`
+        
+
 }
 
 func main() {
@@ -22,11 +26,14 @@ func main() {
 
 // Init resets all the things
 func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+	
+	var account string 
 	if len(args) != 1 {
 		return nil, errors.New("Incorrect number of arguments. Expecting 1")
 	}
 
-	err := stub.PutState("hello_world", []byte(args[0]))
+    account = args[0]
+	err := stub.PutState(account, []byte(args[0]))
 	if err != nil {
 		return nil, err
 	}
