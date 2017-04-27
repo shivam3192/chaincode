@@ -11,12 +11,12 @@ type CrowdFundChaincode struct {
 }
 type StudentInfo struct {
 
-        StudentRollNo string   `json:"studentrollno"`
-        StudentName string `json:"StudentName"`
-        StudentMarksSem1 int   `json:"studentmarkssem1"`
-		StudentMarksSem2 int   `json:"studentmarkssem2"`
-		StudentMarksSem3 int   `json:"studentmarkssem3"`
-		StudentMarksSem4 int   `json:"studentmarkssem4"`
+        	StudentRollNo string   `json:"studentrollno"`
+       		StudentName string `json:"StudentName"`
+       	        StudentMarksSem1 string   `json:"studentmarkssem1"`
+		StudentMarksSem2 string   `json:"studentmarkssem2"`
+		StudentMarksSem3 string   `json:"studentmarkssem3"`
+		StudentMarksSem4 string   `json:"studentmarkssem4"`
 		BadgeInfo 
 }
 	type BadgeInfo struct {
@@ -40,10 +40,10 @@ func (t *CrowdFundChaincode) Init(stub shim.ChaincodeStubInterface, function str
          record := StudentInfo{}
         record.StudentRollNo="12"
         record.StudentName = "assa"
-        record.StudentMarksSem1 = 99;
-		record.StudentMarksSem1 = 98;
-		record.StudentMarksSem1 = 97;
-		record.StudentMarksSem1 = 96;
+        record.StudentMarksSem1 = "99";
+		record.StudentMarksSem1 = "98";
+		record.StudentMarksSem1 = "97";
+		record.StudentMarksSem1 = "96";
         
 	    newrecordByte, err := json.Marshal(record);
         if err!=nil {
@@ -86,13 +86,13 @@ var account string
         record.StudentName     =args[1];
       
 	  //var new1,new2,new3,new4 int ;
-	     new1,err :=strconv.Atoi("args[2]");
+	     new1,err :=strconv.Atoi(args[2]);
 		 record.StudentMarksSem1=new1;
-		 new2,err:=strconv.Atoi("args[3]");
+		 new2,err:=strconv.Atoi(args[3]);
 		record.StudentMarksSem2=new2;
-		new3,err:=strconv.Atoi("args[4]");
+		new3,err:=strconv.Atoi(args[4]);
 		record.StudentMarksSem3=new3;
-		new4,err:=strconv.Atoi("args[5]");
+		new4,err:=strconv.Atoi(args[5]);
         record.StudentMarksSem4=new4;
 		newrecordByte, err := json.Marshal(record);
         if err!=nil {
@@ -106,7 +106,7 @@ var account string
         } 
         return nil, nil
 } else {
-
+//this is update function
 var account string
 var err error
 if len(args) != 1 {
@@ -135,10 +135,10 @@ recordByte, err := stub.GetState(account);
         var avg,i1,i2,i3,i4 int;
 		
 		
-			i1 =record.StudentMarksSem1
-			i2 =record.StudentMarksSem2
-			i3 =record.StudentMarksSem3
-			i4 =record.StudentMarksSem4 
+			i1 =record.StudentMarksSem1;
+			i2 =record.StudentMarksSem2;
+			i3 =record.StudentMarksSem3;
+			i4 =record.StudentMarksSem4 ;
 
 avg = (i1+i2+i3+i4)/4;
 		if((avg >=85) && (avg <100)) {
