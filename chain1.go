@@ -13,10 +13,10 @@ type StudentInfo struct {
 
         	StudentRollNo string   `json:"studentrollno"`
        		StudentName string `json:"StudentName"`
-       	        StudentMarksSem1 string   `json:"studentmarkssem1"`
-		StudentMarksSem2 string   `json:"studentmarkssem2"`
-		StudentMarksSem3 string   `json:"studentmarkssem3"`
-		StudentMarksSem4 string   `json:"studentmarkssem4"`
+       	        StudentMarksSem1 int   `json:"studentmarkssem1"`
+		StudentMarksSem2 int   `json:"studentmarkssem2"`
+		StudentMarksSem3 int   `json:"studentmarkssem3"`
+		StudentMarksSem4 int   `json:"studentmarkssem4"`
 		BadgeInfo 
 }
 	type BadgeInfo struct {
@@ -40,10 +40,10 @@ func (t *CrowdFundChaincode) Init(stub shim.ChaincodeStubInterface, function str
          record := StudentInfo{}
         record.StudentRollNo="12"
         record.StudentName = "assa"
-        record.StudentMarksSem1 = "99";
-		record.StudentMarksSem1 = "98";
-		record.StudentMarksSem1 = "97";
-		record.StudentMarksSem1 = "96";
+        record.StudentMarksSem1 = 99;
+		record.StudentMarksSem1 = 98;
+		record.StudentMarksSem1 = 97;
+		record.StudentMarksSem1 = 96;
         
 	    newrecordByte, err := json.Marshal(record);
         if err!=nil {
