@@ -1,5 +1,6 @@
 package main
-
+//jkfbdskjfhksjnfksdn
+var a
 import (
         "errors"
         "fmt"
